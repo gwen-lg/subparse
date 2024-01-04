@@ -183,12 +183,13 @@ impl IdxFile {
         )
             .map(
                 |(ws1, s1, ws2, timestamp_str, s2, _): (String, &str, String, String, String, ())| -> Result<Vec<IdxFilePart>> {
-                    let mut result = Vec::<IdxFilePart>::new();
-                    result.push(IdxFilePart::Filler(ws1));
-                    result.push(IdxFilePart::Filler(s1.to_string()));
-                    result.push(IdxFilePart::Filler(ws2));
-                    result.push(IdxFilePart::Timestamp(Self::parse_timestamp(line_num, timestamp_str.as_str())?));
-                    result.push(IdxFilePart::Filler(s2.to_string()));
+                    let result = vec![
+                        IdxFilePart::Filler(ws1),
+                        IdxFilePart::Filler(s1.to_string()),
+                        IdxFilePart::Filler(ws2),
+                        IdxFilePart::Timestamp(Self::parse_timestamp(line_num, timestamp_str.as_str())?),
+                        IdxFilePart::Filler(s2.to_string()),
+                    ];
                     Ok(result)
                 },
             )
