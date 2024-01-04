@@ -20,12 +20,6 @@
 //! The focus is on non-destructive parsing, meaning that formatting and other information are preserved
 //! if not explicitely changed.
 
-extern crate combine;
-extern crate encoding_rs;
-extern crate failure;
-extern crate itertools;
-extern crate vobsub;
-
 /// Error-chain generated error types.
 #[macro_use]
 pub mod errors;
