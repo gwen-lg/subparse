@@ -123,7 +123,7 @@ impl AddAssign for Timing {
 
 impl SubAssign for Timing {
     fn sub_assign(&mut self, r: Timing) {
-        self.0 += r.0;
+        self.0 -= r.0;
     }
 }
 
