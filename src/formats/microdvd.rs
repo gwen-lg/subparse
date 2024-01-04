@@ -214,7 +214,7 @@ impl MdvdFile {
                 start_frame,
                 end_frame,
                 text,
-                formatting: cline_fmts.clone().into_iter().chain(sline_fmts.into_iter()).collect(),
+                formatting: cline_fmts.clone().into_iter().chain(sline_fmts).collect(),
             })
             .collect()
     }
