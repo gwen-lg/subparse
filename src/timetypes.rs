@@ -82,7 +82,7 @@ impl Timing {
 
 impl Debug for Timing {
     fn fmt(&self, f: &mut Formatter) -> FmtResult {
-        write!(f, "Timing({})", self.to_string())
+        write!(f, "Timing({})", self)
     }
 }
 
