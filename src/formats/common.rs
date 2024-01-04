@@ -23,6 +23,7 @@ pub fn split_bom(s: &str) -> (&str, &str) {
 
 #[test]
 #[allow(unsafe_code)]
+#[allow(invalid_from_utf8_unchecked)] //TODO: the split_bom should use &[u8] instead of &str ?
 fn test_split_bom() {
     let bom1_vec = &[0xEF, 0xBB, 0xBF];
     let bom2_vec = &[0xFE, 0xFF];
