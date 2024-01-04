@@ -133,7 +133,7 @@ impl SsaFieldsInfo {
             start_field_idx: start_field_idx.ok_or_else(|| Error::from(SsaMissingField { line_num, f: "Start" }))?,
             end_field_idx: end_field_idx.ok_or_else(|| Error::from(SsaMissingField { line_num, f: "End" }))?,
             text_field_idx: text_field_idx2,
-            num_fields: num_fields,
+            num_fields,
         })
     }
 }

@@ -83,10 +83,7 @@ pub struct SubtitleEntry {
 impl SubtitleEntry {
     /// Create subtitle entry with text.
     fn new(timespan: TimeSpan, line: String) -> SubtitleEntry {
-        SubtitleEntry {
-            timespan: timespan,
-            line: Some(line),
-        }
+        SubtitleEntry { timespan, line: Some(line) }
     }
 }
 

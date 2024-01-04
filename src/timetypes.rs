@@ -341,7 +341,7 @@ pub struct TimeSpan {
 impl TimeSpan {
     /// Constructor of `TimeSpan`s.
     pub fn new(start: TimePoint, end: TimePoint) -> TimeSpan {
-        TimeSpan { start: start, end: end }
+        TimeSpan { start, end }
     }
 
     /// Get the length of the `TimeSpan` (can be negative).

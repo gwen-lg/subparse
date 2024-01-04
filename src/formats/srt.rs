@@ -114,11 +114,7 @@ impl SrtFile {
 
     fn state_expect_dialog(line: &str, result: &mut Vec<SrtLine>, index: i64, timespan: TimeSpan, mut texts: Vec<String>) -> SrtParserState {
         if line.trim().is_empty() {
-            result.push(SrtLine {
-                index: index,
-                timespan: timespan,
-                texts: texts,
-            });
+            result.push(SrtLine { index, timespan, texts });
             SrtParserState::Emptyline
         } else {
             texts.push(line.trim().to_string());

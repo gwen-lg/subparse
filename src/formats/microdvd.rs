@@ -154,7 +154,7 @@ impl MdvdFile {
             result.append(&mut lines);
         }
 
-        Ok(MdvdFile { fps: fps, v: result })
+        Ok(MdvdFile { fps, v: result })
     }
 
     // Parses something like "{0}{25}{C:$0000ff}{y:b,u}{f:DeJaVuSans}{s:12}Hello!|{s:15}Hello2!"
@@ -211,9 +211,9 @@ impl MdvdFile {
         fmts_and_lines
             .into_iter()
             .map(|(sline_fmts, text)| MdvdLine {
-                start_frame: start_frame,
-                end_frame: end_frame,
-                text: text,
+                start_frame,
+                end_frame,
+                text,
                 formatting: cline_fmts.clone().into_iter().chain(sline_fmts.into_iter()).collect(),
             })
             .collect()
