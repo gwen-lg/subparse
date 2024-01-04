@@ -55,7 +55,7 @@ impl From<String> for MdvdFormatting {
 impl MdvdFormatting {
     /// Is this a single line formatting (e.g. `y:i`) or a multi-line formatting (e.g `Y:i`)?
     fn is_container_line_formatting(f: &str) -> bool {
-        f.chars().next().and_then(|c| Some(c.is_uppercase())).unwrap_or(false)
+        f.chars().next().map(|c| c.is_uppercase()).unwrap_or(false)
     }
 
     /// Applies `to_lowercase()` to first char, leaves the rest of the characters untouched.
