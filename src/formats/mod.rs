@@ -12,9 +12,9 @@ pub mod vobsub;
 use crate::errors::*;
 use crate::SubtitleEntry;
 use crate::SubtitleFileInterface;
+use chardet::{charset2encoding, detect};
 use encoding_rs::Encoding;
 use std::ffi::OsStr;
-use chardet::{charset2encoding, detect};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 /// All formats which are supported by this library.

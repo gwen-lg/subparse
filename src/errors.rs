@@ -58,7 +58,10 @@ impl fmt::Display for ErrorKind {
                 "unknown file format, only SubRip (.srt), SubStationAlpha (.ssa/.ass) and VobSub (.idx and .sub) are supported at the moment"
             ),
             ErrorKind::DecodingError => write!(f, "error while decoding subtitle from bytes to string (wrong charset encoding?)"),
-            ErrorKind::EncodingDetectionError => write!(f, "could not determine character encoding from byte array (manually supply character encoding?)"),
+            ErrorKind::EncodingDetectionError => write!(
+                f,
+                "could not determine character encoding from byte array (manually supply character encoding?)"
+            ),
             ErrorKind::TextFormatOnly => write!(f, "operation does not work on binary subtitle formats (only text formats)"),
             ErrorKind::UpdatingEntriesNotSupported { format } => write!(
                 f,
