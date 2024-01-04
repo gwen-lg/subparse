@@ -163,7 +163,6 @@ error_chain! {
     }
 }*/
 
-#[macro_use]
 /// Creates the `Error`-context type for an ErrorKind and associated conversion methods.
 macro_rules! define_error {
     ($error:ident, $kind:ident) => {
