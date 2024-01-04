@@ -70,10 +70,7 @@ impl VobFile {
             })
             .with_context(|_| crate::errors::ErrorKind::ParsingError)?;
 
-        Ok(VobFile {
-            data: b.to_vec(),
-            lines: lines,
-        })
+        Ok(VobFile { data: b.to_vec(), lines })
     }
 }
 
