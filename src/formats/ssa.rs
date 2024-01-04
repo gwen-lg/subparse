@@ -290,7 +290,7 @@ impl SsaFile {
             .map(extract_file_parts_closure)
             .collect::<Result<Vec<Vec<SsaFilePart>>>>()?
             .into_iter()
-            .flat_map(|part| part)
+            .flatten()
             .collect();
         Ok(result)
     }
