@@ -14,7 +14,7 @@ edition = "2018"
 [dependencies]
 combine = "2.5.1"
 vobsub = "0.2.3"
-itertools = "0.8.0"
+itertools = "0.12.0"
 encoding_rs = "0.8.28"
 failure = "0.1.8"
 chardet = "0.2.4"
