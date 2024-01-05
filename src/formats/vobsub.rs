@@ -8,12 +8,11 @@ use crate::timetypes::{TimePoint, TimeSpan};
 use crate::{SubtitleEntry, SubtitleFileInterface, SubtitleFormat};
 use failure::ResultExt;
 
-use vobsub;
+use subtitles_utils::{self, vobsub, SubError};
 
 /// `.sub` `VobSub`-parser-specific errors
 #[allow(missing_docs)]
 pub mod errors {
-    use vobsub;
 
     define_error!(Error, ErrorKind);
 
@@ -21,7 +20,7 @@ pub mod errors {
     pub enum ErrorKind {
         // TODO: Vobsub-ErrorKind display
         /// Since `vobsub::Error` does not implement Sync. We cannot use #[cause] for it.
-        VobSubError { cause: vobsub::ErrorKind },
+        VobSubError { cause: subtitles_utils::SubError },
     }
 
     impl fmt::Display for ErrorKind {
@@ -53,7 +52,7 @@ impl VobFile {
     /// Parse contents of a `VobSub` `.sub` file to `VobFile`.
     pub fn parse(b: &[u8]) -> SubtitleParserResult<Self> {
         let lines = vobsub::subtitles(b)
-            .map(|sub_res| -> vobsub::Result<VobSubSubtitle> {
+            .map(|sub_res| -> Result<VobSubSubtitle, SubError> {
                 let sub = sub_res?;
 
                 // only extract the timestamps, discard the big image data
@@ -64,10 +63,8 @@ impl VobFile {
                     },
                 })
             })
-            .collect::<vobsub::Result<Vec<VobSubSubtitle>>>()
-            .map_err(|e| ErrorKind::VobSubError {
-                cause: vobsub::ErrorKind::from(e),
-            })
+            .collect::<Result<Vec<VobSubSubtitle>, SubError>>()
+            .map_err(|e| ErrorKind::VobSubError { cause: e })
             .with_context(|_| crate::errors::ErrorKind::ParsingError)?;
 
         Ok(VobFile { data: b.to_vec(), lines })
