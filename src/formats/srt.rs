@@ -17,7 +17,7 @@ use failure::ResultExt;
 use itertools::Itertools;
 
 use crate::timetypes::{TimePoint, TimeSpan};
-use std::iter::once;
+use std::{io::Write, iter::once};
 
 type Result<T> = std::result::Result<T, Error>;
 
@@ -192,19 +192,22 @@ impl SubtitleFileInterface for SrtFile {
     }
 
     fn to_data(&self) -> SubtitleParserResult<Vec<u8>> {
-        let timepoint_to_str =
-            |t: TimePoint| -> String { format!("{:02}:{:02}:{:02},{:03}", t.hours(), t.mins_comp(), t.secs_comp(), t.msecs_comp()) };
-        let line_to_str = |line: &SrtLine| -> String {
-            format!(
-                "{}\n{} --> {}\n{}\n\n",
-                line.index,
-                timepoint_to_str(line.timespan.start),
-                timepoint_to_str(line.timespan.end),
-                line.texts.join("\n")
-            )
+        let timepoint_to_str = |buf: &mut Vec<u8>, t: TimePoint| {
+            write!(buf, "{:02}:{:02}:{:02},{:03}", t.hours(), t.mins_comp(), t.secs_comp(), t.msecs_comp()).unwrap()
         };
 
-        Ok(self.v.iter().map(line_to_str).collect::<String>().into_bytes())
+        let line_to_str2 = |mut acc: Vec<u8>, line: &SrtLine| -> Vec<u8> {
+            writeln!(&mut acc, "{}", line.index).unwrap();
+            timepoint_to_str(&mut acc, line.timespan.start);
+            writeln!(&mut acc, " --> ").unwrap();
+            timepoint_to_str(&mut acc, line.timespan.end);
+            line.texts.iter().for_each(|line| writeln!(&mut acc, "{line}").unwrap());
+            writeln!(&mut acc, "\n\n").unwrap();
+            acc
+        };
+        let capacity = 128 * self.v.len();
+        let res = self.v.iter().fold(Vec::with_capacity(capacity), line_to_str2);
+        Ok(res)
     }
 }
 
